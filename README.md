@@ -3,148 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Ultimate Pro - Cartes de Visite & Tout-en-Un</title>
+    <title>QR Code Pro - Générateur Professionnel</title>
     
-    <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
-        * { font-family: 'Inter', sans-serif; }
-        
-        :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --accent: #f093fb;
+        * {
+            font-family: 'Inter', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f8fafc;
             min-height: 100vh;
         }
         
-        .glass {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        .step-active {
+            color: #10b981;
         }
         
-        .dark .glass {
-            background: rgba(15, 15, 35, 0.95);
-            border-color: rgba(255, 255, 255, 0.1);
-            color: white;
+        .step-inactive {
+            color: #cbd5e1;
         }
         
-        .btn-gradient {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-gradient:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px -5px rgba(102, 126, 234, 0.4);
-        }
-        
-        .tab-active {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-        }
-        
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        
-        .business-card {
-            aspect-ratio: 1.586;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .business-card:hover {
-            transform: scale(1.02) rotateY(5deg);
-        }
-        
-        .card-template-1 {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: white;
-        }
-        
-        .card-template-2 {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .card-template-3 {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-        }
-        
-        .card-template-4 {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-        }
-        
-        .card-template-5 {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            color: #1a1a2e;
-        }
-        
-        .card-template-6 {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            color: #1a1a2e;
-        }
-        
-        .card-template-7 {
-            background: #ffffff;
-            color: #1a1a2e;
-            border: 2px solid #e5e7eb;
-        }
-        
-        .card-template-8 {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
-        }
-        
-        .qr-preview {
-            background-image: 
-                linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
-                linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
-                linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
-                linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
-            background-size: 20px 20px;
-        }
-        
-        .input-animate {
-            transition: all 0.3s ease;
+        .type-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid transparent;
         }
         
-        .input-animate:focus {
+        .type-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+            border-color: #10b981;
+        }
+        
+        .type-card.active {
+            border-color: #10b981;
+            background: #ecfdf5;
+        }
+        
+        .phone-mockup {
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .phone-screen {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 30px;
+            background: #1a1a1a;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            z-index: 10;
+        }
+        
+        .qr-preview-area {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .input-field {
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .input-field:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .btn-primary {
+            background: #10b981;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #059669;
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px -5px rgba(102, 126, 234, 0.3);
-            border-color: var(--primary);
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-option.active {
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #1a1a1a;
+        }
+        
+        .progress-line {
+            height: 2px;
+            background: #e2e8f0;
+            flex: 1;
+            margin: 0 10px;
+            position: relative;
+        }
+        
+        .progress-line.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background: #10b981;
+            animation: progressFill 0.5s ease;
+        }
+        
+        @keyframes progressFill {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        .template-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .template-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .template-card.active {
+            ring: 3px solid #10b981;
+        }
+        
+        .scanner-frame {
+            position: relative;
+            overflow: hidden;
         }
         
         .scanner-line {
             position: absolute;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, transparent, #00ff00, transparent);
-            box-shadow: 0 0 20px #00ff00;
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+            box-shadow: 0 0 20px #10b981;
             animation: scan 2s linear infinite;
         }
         
@@ -160,13 +184,16 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: #1a1a2e;
+            background: #1a1a1a;
             color: white;
             padding: 16px 28px;
-            border-radius: 16px;
+            border-radius: 12px;
             opacity: 0;
             transition: all 0.4s ease;
             z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         
         .toast.show {
@@ -174,898 +201,1136 @@
             opacity: 1;
         }
         
-        .floating {
-            animation: floating 3s ease-in-out infinite;
+        .tab-content {
+            display: none;
         }
         
-        @keyframes floating {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
         }
         
-        .confetti {
-            position: fixed;
-            width: 10px; height: 10px;
-            pointer-events: none;
-            z-index: 9999;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .progress-bar {
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
-            transition: width 0.3s ease;
+        .history-item {
+            animation: slideIn 0.3s ease;
         }
         
-        .social-icon {
-            transition: all 0.3s ease;
-        }
-        
-        .social-icon:hover {
-            transform: scale(1.2) rotate(10deg);
-        }
-        
-        .contact-menu {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 1rem;
-        }
-        
-        .contact-item {
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 1rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .contact-item:hover {
-            transform: translateY(-5px) scale(1.05);
-        }
-        
-        .contact-item.active {
-            ring: 3px solid var(--primary);
-            transform: scale(1.1);
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
     </style>
 </head>
-<body class="text-gray-800 dark:text-white transition-colors duration-300">
+<body class="text-gray-800">
     
-    <!-- Install Prompt -->
-    <div id="install-prompt" class="fixed top-0 left-0 right-0 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 z-50 hidden">
-        <div class="max-w-6xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <i class="fas fa-mobile-alt text-2xl"></i>
-                <div>
-                    <p class="font-bold">Installez l'application !</p>
-                    <p class="text-sm opacity-90">Accès rapide hors-ligne</p>
-                </div>
-            </div>
-            <div class="flex gap-2">
-                <button onclick="installApp()" class="px-4 py-2 bg-white text-purple-600 rounded-lg font-bold">Installer</button>
-                <button onclick="dismissInstall()" class="w-10 h-10 flex items-center justify-center hover:bg-white/20 rounded-lg"><i class="fas fa-times"></i></button>
-            </div>
-        </div>
-    </div>
-
     <!-- Header -->
-    <header class="relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20"></div>
-        <div class="relative max-w-7xl mx-auto px-4 py-8 text-center">
-            <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-lg mb-6 floating shadow-2xl">
-                <i class="fas fa-qrcode text-4xl text-white"></i>
-            </div>
-            <h1 class="text-5xl md:text-6xl font-black mb-4 text-white">
-                QR Code <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-300">Ultimate</span>
-            </h1>
-            <p class="text-xl text-white/90 mb-8">Cartes de visite digitales, QR codes & Scanner tout-en-un</p>
-            
-            <!-- Stats -->
-            <div class="flex flex-wrap justify-center gap-4">
-                <div class="glass rounded-full px-6 py-3 flex items-center gap-3 text-white">
-                    <i class="fas fa-check-circle text-green-400 text-xl"></i>
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-qrcode text-white text-xl"></i>
+                    </div>
                     <div>
-                        <p class="text-xs opacity-80">QR Générés</p>
-                        <p class="text-xl font-bold" id="stat-total">0</p>
+                        <h1 class="font-bold text-lg leading-tight">QR Code</h1>
+                        <p class="text-xs text-gray-500">Generator</p>
                     </div>
                 </div>
-                <div class="glass rounded-full px-6 py-3 flex items-center gap-3 text-white">
-                    <i class="fas fa-id-card text-blue-400 text-xl"></i>
-                    <div>
-                        <p class="text-xs opacity-80">Cartes</p>
-                        <p class="text-xl font-bold" id="stat-cards">0</p>
+                
+                <!-- Progress Steps -->
+                <div class="hidden md:flex items-center gap-4 flex-1 justify-center max-w-2xl">
+                    <div class="flex items-center gap-2 step-active" id="step-1-indicator">
+                        <div class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold">1</div>
+                        <span class="text-sm font-medium">Select QR type</span>
+                    </div>
+                    <div class="progress-line active" id="line-1"></div>
+                    <div class="flex items-center gap-2 step-inactive" id="step-2-indicator">
+                        <div class="w-6 h-6 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-xs font-bold">2</div>
+                        <span class="text-sm font-medium">Add content</span>
+                    </div>
+                    <div class="progress-line" id="line-2"></div>
+                    <div class="flex items-center gap-2 step-inactive" id="step-3-indicator">
+                        <div class="w-6 h-6 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-xs font-bold">3</div>
+                        <span class="text-sm font-medium">Design QR code</span>
+                    </div>
+                    <div class="progress-line" id="line-3"></div>
+                    <div class="flex items-center gap-2 step-inactive" id="step-4-indicator">
+                        <div class="w-6 h-6 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-xs font-bold">4</div>
+                        <span class="text-sm font-medium">Download</span>
                     </div>
                 </div>
-                <div class="glass rounded-full px-6 py-3 flex items-center gap-3 text-white cursor-pointer" onclick="showFavorites()">
-                    <i class="fas fa-heart text-red-400 text-xl"></i>
-                    <div>
-                        <p class="text-xs opacity-80">Favoris</p>
-                        <p class="text-xl font-bold" id="stat-favs">0</p>
-                    </div>
+                
+                <!-- Right Actions -->
+                <div class="flex items-center gap-3">
+                    <button onclick="showHistory()" class="p-2 text-gray-500 hover:text-gray-700 transition-colors">
+                        <i class="fas fa-history text-xl"></i>
+                    </button>
+                    <button onclick="toggleTheme()" class="p-2 text-gray-500 hover:text-gray-700 transition-colors">
+                        <i class="fas fa-moon text-xl"></i>
+                    </button>
                 </div>
-                <button onclick="toggleTheme()" class="glass rounded-full w-12 h-12 flex items-center justify-center text-white hover:scale-110 transition-transform">
-                    <i class="fas fa-moon text-xl" id="theme-icon"></i>
-                </button>
             </div>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-40 px-4 py-4">
-        <div class="max-w-6xl mx-auto glass rounded-2xl p-2 flex flex-wrap justify-center gap-2">
-            <button onclick="switchTab('cards')" class="nav-btn tab-active px-6 py-3 rounded-xl font-semibold transition-all flex items-center gap-2" data-tab="cards">
-                <i class="fas fa-id-card"></i>
-                <span class="hidden sm:inline">Cartes de Visite</span>
-            </button>
-            <button onclick="switchTab('create')" class="nav-btn px-6 py-3 rounded-xl font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all flex items-center gap-2" data-tab="create">
-                <i class="fas fa-magic"></i>
-                <span class="hidden sm:inline">QR Simple</span>
-            </button>
-            <button onclick="switchTab('wifi')" class="nav-btn px-6 py-3 rounded-xl font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all flex items-center gap-2" data-tab="wifi">
-                <i class="fas fa-wifi"></i>
-                <span class="hidden sm:inline">Wi-Fi</span>
-            </button>
-            <button onclick="switchTab('scan')" class="nav-btn px-6 py-3 rounded-xl font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all flex items-center gap-2" data-tab="scan">
-                <i class="fas fa-camera"></i>
-                <span class="hidden sm:inline">Scanner</span>
-            </button>
-            <button onclick="switchTab('batch')" class="nav-btn px-6 py-3 rounded-xl font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all flex items-center gap-2" data-tab="batch">
-                <i class="fas fa-layer-group"></i>
-                <span class="hidden sm:inline">Lot</span>
-            </button>
-            <button onclick="switchTab('history')" class="nav-btn px-6 py-3 rounded-xl font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all flex items-center gap-2" data-tab="history">
-                <i class="fas fa-history"></i>
-                <span class="hidden sm:inline">Historique</span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- MAIN CONTENT -->
-    <main class="max-w-7xl mx-auto px-4 py-8 pb-32">
-
-        <!-- CARDS TAB - Menu de Contact Complet -->
-        <section id="tab-cards" class="tab-content">
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- STEP 1: Select QR Type -->
+        <section id="step-1" class="tab-content active">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-emerald-500 mb-4">
+                    Easily create a QR code<br>for any occasion in seconds!
+                </h2>
+                <p class="text-gray-500">Choose a QR Type to get started</p>
+            </div>
             
-            <!-- Contact Menu Grid -->
-            <div class="glass rounded-2xl p-8 mb-8">
-                <h2 class="text-2xl font-bold mb-6 text-center">
-                    <i class="fas fa-address-book text-purple-600 mr-2"></i>
-                    Menu de Contact - Choisissez ce que vous voulez partager
-                </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                <!-- Website -->
+                <button onclick="selectType('website')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-globe text-2xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Website</h3>
+                    <p class="text-xs text-gray-500">Link to any website URL</p>
+                </button>
                 
-                <div class="contact-menu max-w-4xl mx-auto">
-                    <button onclick="setCardType('full')" class="contact-item active bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg" data-card="full">
-                        <i class="fas fa-id-card text-3xl mb-2"></i>
-                        <span class="text-sm font-medium">Carte Complète</span>
-                    </button>
-                    
-                    <button onclick="setCardType('phone')" class="contact-item bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-200" data-card="phone">
-                        <i class="fas fa-phone text-3xl mb-2"></i>
-                        <span class="text-sm font-medium">Téléphone</span>
-                    </button>
-                    
-                    <button onclick="setCardType('email')" class="contact-item bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 hover:bg-red-200" data-card="email">
-                        <i class="fas fa-envelope text-3xl mb-2"></i>
-                        <span class="text-sm font-medium">Email</span>
-                    </button>
-                    
-                    <button onclick="setCardType('sms')" class="contact-item bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200" data-card="sms">
-                        <i class="fas fa-sms text-3xl mb-2"></i>
-                        <span class="text-sm font-medium">SMS</span>
-                    </button>
-                    
-                    <button onclick="setCardType('whatsapp')" class="contact-item bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 hover:bg-green-200" data-card="whatsapp">
-                        <i class="fab fa-whatsapp text-3xl mb-2"></i>
-                        <span class="text-sm font-medium">WhatsApp</span>
-                    </button>
-                    
-                    <button onclick="setCardType('social')" class="contact-item bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 hover:bg-pink-200" data-card="social">
-                        <i class="fas fa-share-alt text-3xl mb-2"></i>
-                        <span class="text-sm font-medium">Réseaux</span>
-                    </button>
-                    
-                    <button onclick="setCardType('location')" class="contact-item bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200" data-card="location">
-                        <i class="fas fa-map-marker-alt text-3xl mb-2"></i>
-                        <span class="text-sm font-medium">Adresse</span>
-                    </button>
-                    
-                    <button onclick="setCardType('website')" class="contact-item bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-200" data-card="website">
-                        <i class="fas fa-globe text-3xl mb-2"></i>
-                        <span class="text-sm font-medium">Site Web</span>
-                    </button>
-                    
-                    <button onclick="setCardType('event')" class="contact-item bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 hover:bg-orange-200" data-card="event">
-                        <i class="fas fa-calendar-alt text-3xl mb-2"></i>
-                        <span class="text-sm font-medium">Événement</span>
-                    </button>
-                    
-                    <button onclick="setCardType('vcard')" class="contact-item bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200" data-card="vcard">
-                        <i class="fas fa-user-plus text-3xl mb-2"></i>
-                        <span class="text-sm font-medium">vCard</span>
+                <!-- vCard -->
+                <button onclick="selectType('vcard')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-address-card text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">vCard</h3>
+                    <p class="text-xs text-gray-500">Share a digital business card</p>
+                </button>
+                
+                <!-- Business -->
+                <button onclick="selectType('business')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-briefcase text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Business</h3>
+                    <p class="text-xs text-gray-500">Share info about your business</p>
+                </button>
+                
+                <!-- PDF -->
+                <button onclick="selectType('pdf')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-file-pdf text-2xl text-red-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">PDF</h3>
+                    <p class="text-xs text-gray-500">Share a PDF document</p>
+                </button>
+                
+                <!-- List of Links -->
+                <button onclick="selectType('links')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-list text-2xl text-orange-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">List of Links</h3>
+                    <p class="text-xs text-gray-500">Share multiple links</p>
+                </button>
+                
+                <!-- Video -->
+                <button onclick="selectType('video')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-pink-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-play-circle text-2xl text-pink-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Video</h3>
+                    <p class="text-xs text-gray-500">Share a video</p>
+                </button>
+                
+                <!-- Images -->
+                <button onclick="selectType('images')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-images text-2xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Images</h3>
+                    <p class="text-xs text-gray-500">Share multiple images</p>
+                </button>
+                
+                <!-- Facebook -->
+                <button onclick="selectType('facebook')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-facebook-f text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Facebook</h3>
+                    <p class="text-xs text-gray-500">Share your Facebook page</p>
+                </button>
+                
+                <!-- Instagram -->
+                <button onclick="selectType('instagram')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-pink-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-instagram text-2xl text-pink-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Instagram</h3>
+                    <p class="text-xs text-gray-500">Share your Instagram</p>
+                </button>
+                
+                <!-- Social Media -->
+                <button onclick="selectType('social')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-cyan-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-share-alt text-2xl text-cyan-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Social Media</h3>
+                    <p class="text-xs text-gray-500">Share your social channels</p>
+                </button>
+                
+                <!-- WhatsApp -->
+                <button onclick="selectType('whatsapp')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-whatsapp text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">WhatsApp</h3>
+                    <p class="text-xs text-gray-500">Get WhatsApp messages</p>
+                </button>
+                
+                <!-- WiFi -->
+                <button onclick="selectType('wifi')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-wifi text-2xl text-teal-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">WiFi</h3>
+                    <p class="text-xs text-gray-500">Connect to a Wi-Fi network</p>
+                </button>
+                
+                <!-- Menu -->
+                <button onclick="selectType('menu')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-utensils text-2xl text-yellow-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Menu</h3>
+                    <p class="text-xs text-gray-500">Create a restaurant menu</p>
+                </button>
+                
+                <!-- Apps -->
+                <button onclick="selectType('apps')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-mobile-alt text-2xl text-gray-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Apps</h3>
+                    <p class="text-xs text-gray-500">Redirect to an app store</p>
+                </button>
+                
+                <!-- Coupon -->
+                <button onclick="selectType('coupon')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-rose-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-ticket-alt text-2xl text-rose-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Coupon</h3>
+                    <p class="text-xs text-gray-500">Share a coupon</p>
+                </button>
+                
+                <!-- Event -->
+                <button onclick="selectType('event')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-violet-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-calendar-alt text-2xl text-violet-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Event</h3>
+                    <p class="text-xs text-gray-500">Share event details</p>
+                </button>
+                
+                <!-- Email -->
+                <button onclick="selectType('email')" class="type-card bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-lg">
+                    <div class="w-14 h-14 bg-sky-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-envelope text-2xl text-sky-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Email</h3>
+                    <p class="text-xs text-gray-500">Send an email</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- STEP 2: Add Content -->
+        <section id="step-2" class="tab-content">
+            <div class="max-w-4xl mx-auto">
+                <button onclick="goBack()" class="mb-6 flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to types
+                </button>
+                
+                <h2 id="content-title" class="text-2xl font-bold mb-6">Enter your content</h2>
+                
+                <!-- Dynamic Form Container -->
+                <div id="dynamic-form" class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                    <!-- Forms will be injected here -->
+                </div>
+                
+                <div class="flex justify-end mt-6">
+                    <button onclick="goToStep(3)" class="btn-primary px-8 py-3 rounded-xl text-white font-semibold flex items-center gap-2">
+                        Continue to Design
+                        <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
+        </section>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- STEP 3: Design -->
+        <section id="step-3" class="tab-content">
+            <div class="max-w-6xl mx-auto">
+                <button onclick="goBack()" class="mb-6 flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to content
+                </button>
                 
-                <!-- Form Section -->
-                <div class="space-y-6">
-                    
-                    <!-- Personal Info -->
-                    <div class="glass rounded-2xl p-6 card-hover">
-                        <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
-                            <i class="fas fa-user text-purple-600"></i>
-                            Informations personnelles
-                        </h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Design Options -->
+                    <div>
+                        <h2 class="text-2xl font-bold mb-6">Design your QR code</h2>
                         
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="relative">
-                                <div id="photo-preview" class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden border-4 border-white shadow-lg">
-                                    <i class="fas fa-user text-4xl text-gray-400"></i>
-                                </div>
-                                <label class="absolute bottom-0 right-0 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-purple-700 transition-all shadow-lg">
-                                    <i class="fas fa-camera text-sm"></i>
-                                    <input type="file" id="card-photo" accept="image/*" class="hidden" onchange="handleCardPhoto(event)">
-                                </label>
-                            </div>
-                            <div class="flex-1">
-                                <input type="text" id="card-name" placeholder="Nom complet" class="input-animate w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 focus:outline-none mb-2 font-bold text-lg" oninput="updateCardPreview()">
-                                <input type="text" id="card-title" placeholder="Titre / Fonction" class="input-animate w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 focus:outline-none text-sm" oninput="updateCardPreview()">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3 mb-4">
-                            <input type="tel" id="card-phone" placeholder="Téléphone" class="input-animate w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 focus:outline-none" oninput="updateCardPreview()">
-                            <input type="email" id="card-email" placeholder="Email" class="input-animate w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 focus:outline-none" oninput="updateCardPreview()">
-                        </div>
-                        
-                        <input type="text" id="card-company" placeholder="Entreprise" class="input-animate w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 focus:outline-none mb-3" oninput="updateCardPreview()">
-                        
-                        <textarea id="card-address" placeholder="Adresse complète" rows="2" class="input-animate w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 focus:outline-none resize-none mb-3" oninput="updateCardPreview()"></textarea>
-                        
-                        <input type="url" id="card-website" placeholder="Site web" class="input-animate w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 focus:outline-none mb-4" oninput="updateCardPreview()">
-
-                        <!-- Social Links -->
-                        <div class="space-y-2">
-                            <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Réseaux sociaux</p>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div class="relative">
-                                    <i class="fab fa-linkedin absolute left-3 top-1/2 -translate-y-1/2 text-blue-600"></i>
-                                    <input type="text" id="card-linkedin" placeholder="LinkedIn" class="input-animate w-full pl-10 pr-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800 focus:outline-none text-sm" oninput="updateCardPreview()">
-                                </div>
-                                <div class="relative">
-                                    <i class="fab fa-twitter absolute left-3 top-1/2 -translate-y-1/2 text-blue-400"></i>
-                                    <input type="text" id="card-twitter" placeholder="Twitter" class="input-animate w-full pl-10 pr-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800 focus:outline-none text-sm" oninput="updateCardPreview()">
-                                </div>
-                                <div class="relative">
-                                    <i class="fab fa-instagram absolute left-3 top-1/2 -translate-y-1/2 text-pink-600"></i>
-                                    <input type="text" id="card-instagram" placeholder="Instagram" class="input-animate w-full pl-10 pr-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800 focus:outline-none text-sm" oninput="updateCardPreview()">
-                                </div>
-                                <div class="relative">
-                                    <i class="fab fa-github absolute left-3 top-1/2 -translate-y-1/2 text-gray-800 dark:text-gray-200"></i>
-                                    <input type="text" id="card-github" placeholder="GitHub" class="input-animate w-full pl-10 pr-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800 focus:outline-none text-sm" oninput="updateCardPreview()">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card Design -->
-                    <div class="glass rounded-2xl p-6 card-hover">
-                        <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
-                            <i class="fas fa-paint-brush text-purple-600"></i>
-                            Design de la carte
-                        </h3>
-                        
-                        <div class="grid grid-cols-4 gap-3 mb-4">
-                            <button onclick="setCardTemplate(1)" class="h-16 rounded-xl card-template-1 shadow-md hover:scale-105 transition-transform border-2 border-transparent hover:border-white" data-template="1"></button>
-                            <button onclick="setCardTemplate(2)" class="h-16 rounded-xl card-template-2 shadow-md hover:scale-105 transition-transform border-2 border-transparent hover:border-white" data-template="2"></button>
-                            <button onclick="setCardTemplate(3)" class="h-16 rounded-xl card-template-3 shadow-md hover:scale-105 transition-transform border-2 border-transparent hover:border-white" data-template="3"></button>
-                            <button onclick="setCardTemplate(4)" class="h-16 rounded-xl card-template-4 shadow-md hover:scale-105 transition-transform border-2 border-transparent hover:border-white" data-template="4"></button>
-                            <button onclick="setCardTemplate(5)" class="h-16 rounded-xl card-template-5 shadow-md hover:scale-105 transition-transform border-2 border-transparent hover:border-gray-400" data-template="5"></button>
-                            <button onclick="setCardTemplate(6)" class="h-16 rounded-xl card-template-6 shadow-md hover:scale-105 transition-transform border-2 border-transparent hover:border-gray-400" data-template="6"></button>
-                            <button onclick="setCardTemplate(7)" class="h-16 rounded-xl card-template-7 shadow-md hover:scale-105 transition-transform border-2 border-transparent hover:border-gray-400" data-template="7"></button>
-                            <button onclick="setCardTemplate(8)" class="h-16 rounded-xl card-template-8 shadow-md hover:scale-105 transition-transform border-2 border-transparent hover:border-white" data-template="8"></button>
-                        </div>
-
-                        <div class="flex gap-3">
-                            <button onclick="generateCard()" class="btn-gradient flex-1 py-4 rounded-xl text-white font-bold text-lg shadow-lg flex items-center justify-center gap-2">
-                                <i class="fas fa-magic"></i>
-                                Créer la carte
-                            </button>
-                            <button onclick="downloadCard()" class="px-6 py-4 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-bold hover:bg-gray-300 transition-all">
-                                <i class="fas fa-download"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Preview Section -->
-                <div class="space-y-6">
-                    
-                    <!-- Business Card Preview -->
-                    <div class="glass rounded-2xl p-6 sticky top-24">
-                        <h3 class="font-bold text-lg mb-4 flex items-center justify-between">
-                            <span><i class="fas fa-eye text-purple-600 mr-2"></i>Aperçu de la carte</span>
-                            <button onclick="toggleCardFav()" id="card-fav-btn" class="text-gray-400 hover:text-red-500 transition-all">
-                                <i class="far fa-heart text-xl"></i>
-                            </button>
-                        </h3>
-
-                        <div class="flex justify-center mb-6">
-                            <div id="card-preview" class="business-card w-full max-w-md rounded-2xl shadow-2xl p-6 card-template-1 relative overflow-hidden">
-                                <!-- Card Content -->
-                                <div class="relative z-10 h-full flex flex-col justify-between">
-                                    <div class="flex items-start justify-between">
-                                        <div>
-                                            <h4 id="preview-name" class="text-2xl font-bold mb-1">Votre Nom</h4>
-                                            <p id="preview-title" class="text-sm opacity-80">Titre / Fonction</p>
-                                        </div>
-                                        <div id="preview-photo" class="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center">
-                                            <i class="fas fa-user text-2xl"></i>
-                                        </div>
+                        <!-- Templates -->
+                        <div class="mb-8">
+                            <h3 class="font-semibold mb-4 text-gray-700">Choose a template</h3>
+                            <div class="grid grid-cols-4 gap-3">
+                                <button onclick="setTemplate('classic')" class="template-card active p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50" data-template="classic">
+                                    <div class="w-full aspect-square bg-white rounded-lg flex items-center justify-center mb-2">
+                                        <i class="fas fa-qrcode text-3xl text-gray-800"></i>
                                     </div>
-                                    
-                                    <div class="space-y-1 text-sm">
-                                        <p id="preview-company" class="font-semibold opacity-90">Entreprise</p>
-                                        <p id="preview-contact" class="opacity-80">
-                                            <i class="fas fa-phone mr-2"></i>Téléphone<br>
-                                            <i class="fas fa-envelope mr-2"></i>Email
-                                        </p>
-                                        <p id="preview-address" class="opacity-70 text-xs mt-2">Adresse</p>
-                                    </div>
-
-                                    <div class="flex justify-between items-end">
-                                        <div class="flex gap-2" id="preview-socials">
-                                            <i class="fab fa-linkedin social-icon"></i>
-                                            <i class="fab fa-twitter social-icon"></i>
-                                            <i class="fab fa-instagram social-icon"></i>
-                                        </div>
-                                        <div id="preview-qr" class="w-20 h-20 bg-white rounded-lg p-1">
-                                            <div class="w-full h-full bg-gray-200 rounded flex items-center justify-center">
-                                                <i class="fas fa-qrcode text-gray-400"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    <p class="text-xs font-medium text-center">Classic</p>
+                                </button>
                                 
-                                <!-- Decorative elements -->
-                                <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
-                                <div class="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
-                            </div>
-                        </div>
-
-                        <!-- QR Code Detail -->
-                        <div id="card-qr-detail" class="hidden mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                            <div class="flex justify-center mb-3">
-                                <div id="card-qr-code"></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="downloadCardQR('png')" class="flex-1 py-2 bg-gray-800 text-white rounded-lg text-sm">
-                                    <i class="fas fa-download mr-1"></i> PNG
+                                <button onclick="setTemplate('rounded')" class="template-card p-4 rounded-xl border-2 border-gray-200 hover:border-emerald-300" data-template="rounded">
+                                    <div class="w-full aspect-square bg-white rounded-2xl flex items-center justify-center mb-2">
+                                        <i class="fas fa-qrcode text-3xl text-gray-800"></i>
+                                    </div>
+                                    <p class="text-xs font-medium text-center">Rounded</p>
                                 </button>
-                                <button onclick="shareCard()" class="flex-1 py-2 bg-purple-600 text-white rounded-lg text-sm">
-                                    <i class="fas fa-share-alt mr-1"></i> Partager
+                                
+                                <button onclick="setTemplate('dots')" class="template-card p-4 rounded-xl border-2 border-gray-200 hover:border-emerald-300" data-template="dots">
+                                    <div class="w-full aspect-square bg-white rounded-lg flex items-center justify-center mb-2">
+                                        <div class="grid grid-cols-3 gap-1">
+                                            <div class="w-2 h-2 bg-gray-800 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-800 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-800 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-800 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-800 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-800 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs font-medium text-center">Dots</p>
+                                </button>
+                                
+                                <button onclick="setTemplate('gradient')" class="template-card p-4 rounded-xl border-2 border-gray-200 hover:border-emerald-300" data-template="gradient">
+                                    <div class="w-full aspect-square bg-gradient-to-br from-emerald-400 to-blue-500 rounded-lg flex items-center justify-center mb-2">
+                                        <i class="fas fa-qrcode text-3xl text-white"></i>
+                                    </div>
+                                    <p class="text-xs font-medium text-center">Gradient</p>
                                 </button>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- My Cards Gallery -->
-                    <div class="glass rounded-2xl p-6">
-                        <h3 class="font-bold text-lg mb-4 flex items-center justify-between">
-                            <span><i class="fas fa-images text-purple-600 mr-2"></i>Mes cartes</span>
-                            <button onclick="clearAllCards()" class="text-xs text-red-500 hover:underline">Tout effacer</button>
-                        </h3>
-                        <div id="my-cards-gallery" class="grid grid-cols-2 gap-3 max-h-64 overflow-y-auto">
-                            <p class="text-gray-400 text-center py-8 col-span-2 italic">Aucune carte sauvegardée</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- SIMPLE QR TAB -->
-        <section id="tab-create" class="tab-content hidden">
-            <!-- [Previous QR creation code - same as before] -->
-            <div class="text-center py-12">
-                <p class="text-gray-500">Utilisez l'onglet "Cartes de Visite" pour des QR codes complets, ou sélectionnez un type spécifique ci-dessous:</p>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 max-w-4xl mx-auto">
-                    <button onclick="switchTab('wifi')" class="glass p-6 rounded-2xl hover:shadow-xl transition-all">
-                        <i class="fas fa-wifi text-4xl text-blue-500 mb-3"></i>
-                        <p class="font-bold">Wi-Fi</p>
-                        <p class="text-xs text-gray-500">Connexion rapide</p>
-                    </button>
-                    <button onclick="switchToSimpleQR('url')" class="glass p-6 rounded-2xl hover:shadow-xl transition-all">
-                        <i class="fas fa-link text-4xl text-purple-500 mb-3"></i>
-                        <p class="font-bold">URL</p>
-                        <p class="text-xs text-gray-500">Lien web</p>
-                    </button>
-                    <button onclick="switchToSimpleQR('text')" class="glass p-6 rounded-2xl hover:shadow-xl transition-all">
-                        <i class="fas fa-font text-4xl text-green-500 mb-3"></i>
-                        <p class="font-bold">Texte</p>
-                        <p class="text-xs text-gray-500">Message libre</p>
-                    </button>
-                    <button onclick="switchTab('batch')" class="glass p-6 rounded-2xl hover:shadow-xl transition-all">
-                        <i class="fas fa-layer-group text-4xl text-orange-500 mb-3"></i>
-                        <p class="font-bold">Lot</p>
-                        <p class="text-xs text-gray-500">Plusieurs QR</p>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- WIFI TAB - Special Section -->
-        <section id="tab-wifi" class="tab-content hidden">
-            <div class="max-w-2xl mx-auto">
-                <div class="glass rounded-2xl p-8">
-                    <div class="text-center mb-8">
-                        <div class="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-wifi text-4xl text-blue-600"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold mb-2">QR Code Wi-Fi</h2>
-                        <p class="text-gray-600 dark:text-gray-400">Vos invités se connectent en scannant, sans taper le mot de passe</p>
-                    </div>
-
-                    <div class="space-y-4 mb-6">
-                        <input type="text" id="wifi-ssid-simple" placeholder="Nom du réseau (SSID)" class="input-animate w-full px-4 py-4 rounded-xl bg-gray-50 dark:bg-gray-800 focus:outline-none text-lg" oninput="generateWiFiQR()">
                         
-                        <div class="relative">
-                            <input type="password" id="wifi-password-simple" placeholder="Mot de passe" class="input-animate w-full px-4 py-4 rounded-xl bg-gray-50 dark:bg-gray-800 focus:outline-none text-lg" oninput="generateWiFiQR()">
-                            <button onclick="togglePassword('wifi-password-simple')" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-
-                        <select id="wifi-security-simple" class="input-animate w-full px-4 py-4 rounded-xl bg-gray-50 dark:bg-gray-800 focus:outline-none" onchange="generateWiFiQR()">
-                            <option value="WPA">WPA/WPA2 (Standard)</option>
-                            <option value="WEP">WEP (Ancien)</option>
-                            <option value="nopass">Sans mot de passe (Ouvert)</option>
-                        </select>
-
-                        <div class="flex items-center gap-3 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl">
-                            <i class="fas fa-lightbulb text-yellow-600 text-xl"></i>
-                            <p class="text-sm text-yellow-800 dark:text-yellow-300">Astuce: Imprimez ce QR et affichez-le dans votre salon ou bureau pour un accès facile</p>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-center mb-6">
-                        <div id="wifi-qr-preview" class="qr-preview p-8 rounded-2xl bg-white">
-                            <div class="w-64 h-64 bg-gray-100 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-qrcode text-6xl text-gray-300"></i>
+                        <!-- Colors -->
+                        <div class="mb-8">
+                            <h3 class="font-semibold mb-4 text-gray-700">QR Color</h3>
+                            <div class="flex gap-3 flex-wrap">
+                                <button onclick="setColor('#000000')" class="color-option active bg-black" data-color="#000000"></button>
+                                <button onclick="setColor('#10b981')" class="color-option bg-emerald-500" data-color="#10b981"></button>
+                                <button onclick="setColor('#3b82f6')" class="color-option bg-blue-500" data-color="#3b82f6"></button>
+                                <button onclick="setColor('#ef4444')" class="color-option bg-red-500" data-color="#ef4444"></button>
+                                <button onclick="setColor('#f59e0b')" class="color-option bg-amber-500" data-color="#f59e0b"></button>
+                                <button onclick="setColor('#8b5cf6')" class="color-option bg-violet-500" data-color="#8b5cf6"></button>
+                                <button onclick="setColor('#ec4899')" class="color-option bg-pink-500" data-color="#ec4899"></button>
+                                <button onclick="setColor('#06b6d4')" class="color-option bg-cyan-500" data-color="#06b6d4"></button>
                             </div>
                         </div>
-                    </div>
-
-                    <div id="wifi-actions" class="hidden grid grid-cols-2 gap-3">
-                        <button onclick="downloadWiFiQR('png')" class="btn-gradient py-3 rounded-xl text-white font-bold">
-                            <i class="fas fa-download mr-2"></i> Télécharger
-                        </button>
-                        <button onclick="printWiFiQR()" class="py-3 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-bold hover:bg-gray-300 transition-all">
-                            <i class="fas fa-print mr-2"></i> Imprimer
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SCAN TAB -->
-        <section id="tab-scan" class="tab-content hidden">
-            <div class="max-w-3xl mx-auto">
-                <div class="glass rounded-2xl p-8 text-center">
-                    <h2 class="text-3xl font-bold mb-6 flex items-center justify-center gap-3">
-                        <i class="fas fa-camera text-purple-600"></i>
-                        Scanner un QR Code
-                    </h2>
-                    
-                    <div class="relative rounded-2xl overflow-hidden bg-black aspect-video mb-6 shadow-2xl">
-                        <video id="scan-video" class="w-full h-full object-cover" autoplay playsinline></video>
-                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <div class="w-64 h-64 border-2 border-white/30 rounded-2xl relative">
-                                <div class="scanner-line"></div>
-                                <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-green-400 rounded-tl-lg"></div>
-                                <div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-green-400 rounded-tr-lg"></div>
-                                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-green-400 rounded-bl-lg"></div>
-                                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-green-400 rounded-br-lg"></div>
+                        
+                        <!-- Logo Upload -->
+                        <div class="mb-8">
+                            <h3 class="font-semibold mb-4 text-gray-700">Add logo (optional)</h3>
+                            <div class="flex items-center gap-4">
+                                <label class="flex-1 cursor-pointer">
+                                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:border-emerald-500 hover:bg-emerald-50 transition-all">
+                                        <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                        <p class="text-sm text-gray-600">Click to upload logo</p>
+                                        <p class="text-xs text-gray-400 mt-1">PNG, JPG up to 2MB</p>
+                                        <input type="file" id="design-logo" accept="image/*" class="hidden" onchange="handleDesignLogo(event)">
+                                    </div>
+                                </label>
+                                <div id="design-logo-preview" class="hidden w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center overflow-hidden">
+                                    <img id="design-logo-img" class="w-full h-full object-contain">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Size -->
+                        <div class="mb-8">
+                            <h3 class="font-semibold mb-4 text-gray-700">Size</h3>
+                            <input type="range" id="qr-size" min="200" max="1000" value="300" class="w-full accent-emerald-500" oninput="updateDesignPreview()">
+                            <div class="flex justify-between text-sm text-gray-500 mt-1">
+                                <span>Small</span>
+                                <span id="size-display">300px</span>
+                                <span>Large</span>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="flex gap-3 justify-center">
-                        <button onclick="startScan()" class="btn-gradient px-8 py-4 rounded-xl text-white font-bold text-lg flex items-center gap-3 shadow-xl">
-                            <i class="fas fa-play"></i> Démarrer
-                        </button>
-                        <label class="px-6 py-4 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-bold flex items-center gap-3 cursor-pointer hover:bg-gray-300 transition-all shadow-lg">
-                            <i class="fas fa-image"></i> Importer
-                            <input type="file" accept="image/*" class="hidden" onchange="scanFromImage(event)">
-                        </label>
-                    </div>
-
-                    <div id="scan-result" class="hidden mt-8 p-6 bg-green-50 dark:bg-green-900/20 border-2 border-green-200 dark:border-green-800 rounded-2xl text-left">
-                        <h4 class="font-bold text-green-800 dark:text-green-300 mb-3">QR Code détecté !</h4>
-                        <p id="scan-content" class="text-gray-800 dark:text-gray-200 break-all font-mono text-sm mb-4 p-3 bg-white dark:bg-gray-800 rounded-lg"></p>
-                        <div class="flex gap-2 flex-wrap">
-                            <button onclick="copyScanResult()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                                <i class="fas fa-copy mr-1"></i> Copier
-                            </button>
-                            <button onclick="useScanResult()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                                <i class="fas fa-edit mr-1"></i> Utiliser
-                            </button>
-                            <a id="scan-link" href="#" target="_blank" class="hidden px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
-                                <i class="fas fa-external-link-alt mr-1"></i> Ouvrir
-                            </a>
+                    <!-- Preview Phone -->
+                    <div class="flex justify-center items-start">
+                        <div class="phone-mockup">
+                            <div class="phone-screen w-80 h-[600px]">
+                                <div class="notch"></div>
+                                <div class="qr-preview-area h-full flex flex-col items-center justify-center p-6">
+                                    <div id="phone-qr-container" class="mb-6">
+                                        <div class="w-48 h-48 bg-white rounded-2xl shadow-xl flex items-center justify-center">
+                                            <i class="fas fa-qrcode text-6xl text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-500 text-center text-sm">Scan this QR code<br>with your phone</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- BATCH TAB -->
-        <section id="tab-batch" class="tab-content hidden">
-            <div class="glass rounded-2xl p-8">
-                <h2 class="text-3xl font-bold mb-6 flex items-center gap-3">
-                    <i class="fas fa-layer-group text-purple-600"></i>
-                    Génération en lot
-                </h2>
                 
-                <textarea id="batch-input" rows="8" placeholder="https://site1.com&#10;https://site2.com&#10;mailto:email@example.com&#10;tel:+33123456789&#10;..." class="input-animate w-full px-4 py-4 rounded-xl bg-gray-50 dark:bg-gray-800 focus:outline-none font-mono text-sm mb-4"></textarea>
-                
-                <div class="flex gap-3 mb-6">
-                    <button onclick="generateBatch()" class="btn-gradient px-8 py-3 rounded-xl text-white font-bold shadow-lg">
-                        <i class="fas fa-magic mr-2"></i> Générer
-                    </button>
-                    <button onclick="downloadBatchZIP()" id="batch-zip-btn" class="px-6 py-3 rounded-xl bg-gray-200 text-gray-800 font-bold opacity-50 cursor-not-allowed" disabled>
-                        <i class="fas fa-file-zip mr-2"></i> ZIP
+                <div class="flex justify-end mt-8">
+                    <button onclick="goToStep(4)" class="btn-primary px-8 py-3 rounded-xl text-white font-semibold flex items-center gap-2">
+                        Continue to Download
+                        <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
-
-                <div id="batch-results" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4"></div>
             </div>
         </section>
 
-        <!-- HISTORY TAB -->
-        <section id="tab-history" class="tab-content hidden">
-            <div class="glass rounded-2xl p-8">
-                <h2 class="text-3xl font-bold mb-6">Historique complet</h2>
-                <div id="full-history" class="space-y-3 max-h-96 overflow-y-auto">
-                    <p class="text-gray-400 text-center py-8">Aucun élément dans l'historique</p>
+        <!-- STEP 4: Download -->
+        <section id="step-4" class="tab-content">
+            <div class="max-w-4xl mx-auto text-center">
+                <button onclick="goBack()" class="mb-6 flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to design
+                </button>
+                
+                <div class="bg-white rounded-3xl p-12 shadow-lg border border-gray-100">
+                    <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-check text-4xl text-emerald-600"></i>
+                    </div>
+                    
+                    <h2 class="text-3xl font-bold mb-4">Your QR code is ready!</h2>
+                    <p class="text-gray-500 mb-8">Download your QR code in your preferred format</p>
+                    
+                    <div class="flex justify-center mb-8">
+                        <div id="final-qr" class="p-4 bg-white rounded-2xl shadow-xl"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                        <button onclick="downloadFinal('png')" class="p-4 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all">
+                            <i class="fas fa-download text-2xl text-gray-700 mb-2"></i>
+                            <p class="font-semibold text-sm">PNG</p>
+                        </button>
+                        
+                        <button onclick="downloadFinal('svg')" class="p-4 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all">
+                            <i class="fas fa-vector-square text-2xl text-gray-700 mb-2"></i>
+                            <p class="font-semibold text-sm">SVG</p>
+                        </button>
+                        
+                        <button onclick="downloadFinal('pdf')" class="p-4 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all">
+                            <i class="fas fa-file-pdf text-2xl text-gray-700 mb-2"></i>
+                            <p class="font-semibold text-sm">PDF</p>
+                        </button>
+                        
+                        <button onclick="printFinal()" class="p-4 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all">
+                            <i class="fas fa-print text-2xl text-gray-700 mb-2"></i>
+                            <p class="font-semibold text-sm">Print</p>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-8 pt-8 border-t border-gray-200">
+                        <button onclick="shareFinal()" class="btn-primary px-8 py-3 rounded-xl text-white font-semibold inline-flex items-center gap-2">
+                            <i class="fas fa-share-alt"></i>
+                            Share QR Code
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- Scanner Modal -->
+        <div id="scanner-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl p-6 max-w-lg w-full">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-lg">Scan QR Code</h3>
+                    <button onclick="closeScanner()" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="relative rounded-2xl overflow-hidden bg-black aspect-video mb-4 scanner-frame">
+                    <video id="scan-video" class="w-full h-full object-cover" autoplay playsinline></video>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-48 h-48 border-2 border-emerald-400 rounded-2xl relative">
+                            <div class="scanner-line"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-3">
+                    <button onclick="startCamera()" class="flex-1 btn-primary py-3 rounded-xl text-white font-semibold">
+                        <i class="fas fa-camera mr-2"></i> Start Camera
+                    </button>
+                    <label class="flex-1 py-3 rounded-xl bg-gray-100 text-gray-700 font-semibold text-center cursor-pointer hover:bg-gray-200 transition-all">
+                        <i class="fas fa-image mr-2"></i> Upload
+                        <input type="file" accept="image/*" class="hidden" onchange="scanFromFile(event)">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Modal -->
+        <div id="history-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl p-6 max-w-2xl w-full max-h-[80vh] overflow-hidden flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-xl">History</h3>
+                    <button onclick="closeHistory()" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div id="history-list" class="flex-1 overflow-y-auto space-y-3">
+                    <!-- History items -->
+                </div>
+            </div>
+        </div>
 
     </main>
 
     <!-- Toast -->
     <div id="toast" class="toast">
-        <i class="fas fa-check-circle text-green-400 text-xl mr-3"></i>
-        <span id="toast-message">Opération réussie</span>
+        <i class="fas fa-check-circle text-emerald-400 text-xl"></i>
+        <span id="toast-message">Success</span>
     </div>
 
     <script>
-        // Global State
-        let currentCardType = 'full';
-        let currentCardTemplate = 1;
-        let cardPhoto = null;
-        let myCards = JSON.parse(localStorage.getItem('myCards') || '[]');
+        // State
+        let currentStep = 1;
+        let selectedType = '';
+        let qrData = '';
+        let qrColor = '#000000';
+        let qrTemplate = 'classic';
+        let qrSize = 300;
+        let qrLogo = null;
         let scanStream = null;
-        let qrHistory = JSON.parse(localStorage.getItem('qrHistory') || '[]');
-        let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        let history = JSON.parse(localStorage.getItem('qrHistory') || '[]');
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            updateStats();
-            renderMyCards();
-            renderHistory();
-            updateCardPreview();
+            updateStepIndicators();
         });
 
-        // Tab Switching
-        function switchTab(tab) {
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                if (btn.dataset.tab === tab) {
-                    btn.classList.add('tab-active');
-                    btn.classList.remove('text-gray-600', 'dark:text-gray-300');
+        // Step Management
+        function updateStepIndicators() {
+            for (let i = 1; i <= 4; i++) {
+                const indicator = document.getElementById(`step-${i}-indicator`);
+                const line = document.getElementById(`line-${i}`);
+                
+                if (i <= currentStep) {
+                    indicator.classList.remove('step-inactive');
+                    indicator.classList.add('step-active');
+                    indicator.querySelector('div').classList.remove('bg-gray-200', 'text-gray-500');
+                    indicator.querySelector('div').classList.add('bg-emerald-500', 'text-white');
                 } else {
-                    btn.classList.remove('tab-active');
-                    btn.classList.add('text-gray-600', 'dark:text-gray-300');
+                    indicator.classList.add('step-inactive');
+                    indicator.classList.remove('step-active');
+                    indicator.querySelector('div').classList.add('bg-gray-200', 'text-gray-500');
+                    indicator.querySelector('div').classList.remove('bg-emerald-500', 'text-white');
                 }
-            });
-            
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-            document.getElementById(`tab-${tab}`).classList.remove('hidden');
-            
-            if (tab === 'history') renderHistory();
+                
+                if (line) {
+                    if (i < currentStep) {
+                        line.classList.add('active');
+                    } else {
+                        line.classList.remove('active');
+                    }
+                }
+            }
         }
 
-        // Card Type Selection
-        function setCardType(type) {
-            currentCardType = type;
+        function goToStep(step) {
+            // Validation
+            if (step === 3 && !validateStep2()) return;
+            if (step === 4) generateFinalQR();
             
-            document.querySelectorAll('.contact-item').forEach(btn => {
-                if (btn.dataset.card === type) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
+            // Hide all
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
             });
             
-            updateCardPreview();
+            // Show target
+            document.getElementById(`step-${step}`).classList.add('active');
+            currentStep = step;
+            updateStepIndicators();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Card Template Selection
-        function setCardTemplate(template) {
-            currentCardTemplate = template;
+        function goBack() {
+            if (currentStep > 1) {
+                goToStep(currentStep - 1);
+            }
+        }
+
+        // Type Selection
+        function selectType(type) {
+            selectedType = type;
             
-            const preview = document.getElementById('card-preview');
-            preview.className = `business-card w-full max-w-md rounded-2xl shadow-2xl p-6 relative overflow-hidden card-template-${template}`;
-            
-            document.querySelectorAll('[data-template]').forEach(btn => {
-                if (parseInt(btn.dataset.template) === template) {
-                    btn.classList.add('ring-4', 'ring-white', 'scale-110');
-                } else {
-                    btn.classList.remove('ring-4', 'ring-white', 'scale-110');
-                }
+            // Visual feedback
+            document.querySelectorAll('.type-card').forEach(card => {
+                card.classList.remove('active');
             });
+            event.currentTarget.classList.add('active');
+            
+            // Build form
+            buildDynamicForm(type);
+            
+            // Go to step 2
+            setTimeout(() => goToStep(2), 300);
         }
 
-        // Photo Handling
-        function handleCardPhoto(event) {
+        // Dynamic Form Builder
+        function buildDynamicForm(type) {
+            const container = document.getElementById('dynamic-form');
+            const title = document.getElementById('content-title');
+            
+            const forms = {
+                website: {
+                    title: 'Enter website URL',
+                    html: `
+                        <div class="space-y-4">
+                            <label class="block text-sm font-medium text-gray-700">Website URL</label>
+                            <input type="url" id="input-url" placeholder="https://www.example.com" class="input-field w-full px-4 py-4 rounded-xl text-lg">
+                            <p class="text-sm text-gray-500">Enter the full URL including https://</p>
+                        </div>
+                    `
+                },
+                vcard: {
+                    title: 'Enter contact information',
+                    html: `
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                <input type="text" id="vcard-firstname" placeholder="John" class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                <input type="text" id="vcard-lastname" placeholder="Doe" class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                            <input type="tel" id="vcard-phone" placeholder="+1 234 567 890" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" id="vcard-email" placeholder="john@example.com" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Company</label>
+                            <input type="text" id="vcard-company" placeholder="Company Name" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                    `
+                },
+                business: {
+                    title: 'Enter business information',
+                    html: `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Business Name</label>
+                            <input type="text" id="biz-name" placeholder="Your Business" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <textarea id="biz-desc" rows="3" placeholder="What does your business do?" class="input-field w-full px-4 py-3 rounded-xl"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Website</label>
+                            <input type="url" id="biz-url" placeholder="https://yourbusiness.com" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                    `
+                },
+                wifi: {
+                    title: 'Enter Wi-Fi credentials',
+                    html: `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Network Name (SSID)</label>
+                            <input type="text" id="wifi-ssid" placeholder="MyWiFiNetwork" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input type="text" id="wifi-pass" placeholder="WiFiPassword123" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Security</label>
+                            <select id="wifi-sec" class="input-field w-full px-4 py-3 rounded-xl">
+                                <option value="WPA">WPA/WPA2</option>
+                                <option value="WEP">WEP</option>
+                                <option value="nopass">No Password</option>
+                            </select>
+                        </div>
+                    `
+                },
+                whatsapp: {
+                    title: 'Enter WhatsApp number',
+                    html: `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="wa-number" placeholder="+1 234 567 890" class="input-field w-full px-4 py-4 rounded-xl text-lg">
+                            <p class="text-sm text-gray-500 mt-2">Include country code (e.g., +1 for USA)</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Prefilled Message (optional)</label>
+                            <textarea id="wa-message" rows="3" placeholder="Hello, I'm interested in..." class="input-field w-full px-4 py-3 rounded-xl"></textarea>
+                        </div>
+                    `
+                },
+                email: {
+                    title: 'Enter email details',
+                    html: `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">To</label>
+                            <input type="email" id="email-to" placeholder="recipient@example.com" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                            <input type="text" id="email-subject" placeholder="Email Subject" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Body</label>
+                            <textarea id="email-body" rows="4" placeholder="Email message..." class="input-field w-full px-4 py-3 rounded-xl"></textarea>
+                        </div>
+                    `
+                },
+                facebook: {
+                    title: 'Enter Facebook page URL',
+                    html: `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Facebook Page URL</label>
+                            <input type="url" id="fb-url" placeholder="https://facebook.com/yourpage" class="input-field w-full px-4 py-4 rounded-xl text-lg">
+                        </div>
+                    `
+                },
+                instagram: {
+                    title: 'Enter Instagram username',
+                    html: `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Instagram Username</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg">@</span>
+                                <input type="text" id="ig-user" placeholder="username" class="input-field w-full pl-12 pr-4 py-4 rounded-xl text-lg">
+                            </div>
+                        </div>
+                    `
+                },
+                social: {
+                    title: 'Enter social media links',
+                    html: `
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2"><i class="fab fa-instagram text-pink-500 mr-2"></i>Instagram</label>
+                                <input type="text" id="social-ig" placeholder="@username" class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2"><i class="fab fa-twitter text-blue-400 mr-2"></i>Twitter</label>
+                                <input type="text" id="social-tw" placeholder="@username" class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2"><i class="fab fa-linkedin text-blue-700 mr-2"></i>LinkedIn</label>
+                                <input type="text" id="social-li" placeholder="username" class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2"><i class="fab fa-tiktok text-black mr-2"></i>TikTok</label>
+                                <input type="text" id="social-tt" placeholder="@username" class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                        </div>
+                    `
+                },
+                event: {
+                    title: 'Enter event details',
+                    html: `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event Name</label>
+                            <input type="text" id="event-name" placeholder="My Awesome Event" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Start</label>
+                                <input type="datetime-local" id="event-start" class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">End</label>
+                                <input type="datetime-local" id="event-end" class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                            <input type="text" id="event-loc" placeholder="Event Location" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                    `
+                },
+                pdf: {
+                    title: 'Upload PDF file',
+                    html: `
+                        <div class="border-2 border-dashed border-gray-300 rounded-2xl p-12 text-center hover:border-emerald-500 hover:bg-emerald-50 transition-all cursor-pointer">
+                            <i class="fas fa-file-pdf text-6xl text-red-500 mb-4"></i>
+                            <p class="text-lg font-medium text-gray-700 mb-2">Click to upload PDF</p>
+                            <p class="text-sm text-gray-500">or drag and drop</p>
+                            <input type="file" accept=".pdf" class="hidden" onchange="handlePDFUpload(event)">
+                        </div>
+                    `
+                },
+                menu: {
+                    title: 'Enter menu URL or upload',
+                    html: `
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Restaurant Name</label>
+                                <input type="text" id="menu-name" placeholder="Your Restaurant" class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Menu URL</label>
+                                <input type="url" id="menu-url" placeholder="https://yourrestaurant.com/menu" class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                            <p class="text-center text-gray-500">or</p>
+                            <div class="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:border-emerald-500 hover:bg-emerald-50 transition-all cursor-pointer">
+                                <i class="fas fa-upload text-3xl text-gray-400 mb-2"></i>
+                                <p class="text-sm text-gray-600">Upload Menu PDF</p>
+                                <input type="file" accept=".pdf" class="hidden">
+                            </div>
+                        </div>
+                    `
+                },
+                apps: {
+                    title: 'Enter app store links',
+                    html: `
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2"><i class="fab fa-apple text-gray-800 mr-2"></i>App Store</label>
+                                <input type="url" id="app-ios" placeholder="https://apps.apple.com/..." class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2"><i class="fab fa-google-play text-green-600 mr-2"></i>Google Play</label>
+                                <input type="url" id="app-android" placeholder="https://play.google.com/..." class="input-field w-full px-4 py-3 rounded-xl">
+                            </div>
+                        </div>
+                    `
+                },
+                coupon: {
+                    title: 'Enter coupon details',
+                    html: `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Coupon Code</label>
+                            <input type="text" id="coupon-code" placeholder="SAVE20" class="input-field w-full px-4 py-3 rounded-xl text-2xl font-mono text-center tracking-widest">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <input type="text" id="coupon-desc" placeholder="20% off your next purchase" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Valid Until</label>
+                            <input type="date" id="coupon-expiry" class="input-field w-full px-4 py-3 rounded-xl">
+                        </div>
+                    `
+                },
+                video: {
+                    title: 'Enter video URL',
+                    html: `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Video URL</label>
+                            <input type="url" id="video-url" placeholder="https://youtube.com/watch?v=..." class="input-field w-full px-4 py-4 rounded-xl text-lg">
+                            <p class="text-sm text-gray-500 mt-2">Supports YouTube, Vimeo, and other platforms</p>
+                        </div>
+                    `
+                },
+                images: {
+                    title: 'Upload images',
+                    html: `
+                        <div class="border-2 border-dashed border-gray-300 rounded-2xl p-12 text-center hover:border-emerald-500 hover:bg-emerald-50 transition-all cursor-pointer">
+                            <i class="fas fa-images text-6xl text-indigo-500 mb-4"></i>
+                            <p class="text-lg font-medium text-gray-700 mb-2">Click to upload images</p>
+                            <p class="text-sm text-gray-500">Select multiple images</p>
+                            <input type="file" accept="image/*" multiple class="hidden">
+                        </div>
+                    `
+                },
+                links: {
+                    title: 'Enter multiple links',
+                    html: `
+                        <div id="links-container" class="space-y-3">
+                            <div class="flex gap-2">
+                                <input type="url" placeholder="https://example.com" class="input-field flex-1 px-4 py-3 rounded-xl link-input">
+                            </div>
+                        </div>
+                        <button onclick="addLinkField()" class="mt-4 flex items-center gap-2 text-emerald-600 font-medium hover:text-emerald-700">
+                            <i class="fas fa-plus-circle"></i>
+                            Add another link
+                        </button>
+                    `
+                }
+            };
+            
+            const form = forms[type] || forms.website;
+            title.textContent = form.title;
+            container.innerHTML = form.html;
+        }
+
+        function addLinkField() {
+            const container = document.getElementById('links-container');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2';
+            div.innerHTML = `
+                <input type="url" placeholder="https://example.com" class="input-field flex-1 px-4 py-3 rounded-xl link-input">
+                <button onclick="this.parentElement.remove()" class="px-3 text-red-500 hover:text-red-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(div);
+        }
+
+        // Validation
+        function validateStep2() {
+            // Collect data based on type
+            switch(selectedType) {
+                case 'website':
+                    qrData = document.getElementById('input-url')?.value;
+                    break;
+                case 'vcard':
+                    const fn = document.getElementById('vcard-firstname')?.value;
+                    const ln = document.getElementById('vcard-lastname')?.value;
+                    const phone = document.getElementById('vcard-phone')?.value;
+                    const email = document.getElementById('vcard-email')?.value;
+                    const company = document.getElementById('vcard-company')?.value;
+                    qrData = `BEGIN:VCARD\nVERSION:3.0\nFN:${fn} ${ln}\nTEL:${phone}\nEMAIL:${email}\nORG:${company}\nEND:VCARD`;
+                    break;
+                case 'wifi':
+                    const ssid = document.getElementById('wifi-ssid')?.value;
+                    const pass = document.getElementById('wifi-pass')?.value;
+                    const sec = document.getElementById('wifi-sec')?.value;
+                    qrData = `WIFI:T:${sec};S:${ssid};P:${pass};;`;
+                    break;
+                case 'whatsapp':
+                    const num = document.getElementById('wa-number')?.value.replace(/[^0-9]/g, '');
+                    const msg = document.getElementById('wa-message')?.value;
+                    qrData = `https://wa.me/${num}${msg ? '?text=' + encodeURIComponent(msg) : ''}`;
+                    break;
+                case 'email':
+                    const to = document.getElementById('email-to')?.value;
+                    const subject = document.getElementById('email-subject')?.value;
+                    const body = document.getElementById('email-body')?.value;
+                    qrData = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    break;
+                case 'facebook':
+                    qrData = document.getElementById('fb-url')?.value;
+                    break;
+                case 'instagram':
+                    const user = document.getElementById('ig-user')?.value;
+                    qrData = `https://instagram.com/${user}`;
+                    break;
+                case 'social':
+                    const ig = document.getElementById('social-ig')?.value;
+                    const tw = document.getElementById('social-tw')?.value;
+                    const li = document.getElementById('social-li')?.value;
+                    const tt = document.getElementById('social-tt')?.value;
+                    qrData = `https://linktr.ee/${ig || 'user'}`; // Simplified
+                    break;
+                case 'event':
+                    const ename = document.getElementById('event-name')?.value;
+                    const start = document.getElementById('event-start')?.value;
+                    const end = document.getElementById('event-end')?.value;
+                    const loc = document.getElementById('event-loc')?.value;
+                    qrData = `BEGIN:VEVENT\nSUMMARY:${ename}\nDTSTART:${start}\nDTEND:${end}\nLOCATION:${loc}\nEND:VEVENT`;
+                    break;
+                case 'coupon':
+                    const code = document.getElementById('coupon-code')?.value;
+                    const desc = document.getElementById('coupon-desc')?.value;
+                    qrData = `COUPON:${code}:${desc}`;
+                    break;
+                case 'video':
+                    qrData = document.getElementById('video-url')?.value;
+                    break;
+                default:
+                    qrData = 'https://example.com';
+            }
+            
+            if (!qrData || qrData.includes('undefined')) {
+                showToast('Please fill in the required fields', 'error');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Design Functions
+        function setTemplate(template) {
+            qrTemplate = template;
+            document.querySelectorAll('.template-card').forEach(t => {
+                t.classList.remove('active', 'border-emerald-500', 'bg-emerald-50');
+                t.classList.add('border-gray-200');
+            });
+            event.currentTarget.classList.add('active', 'border-emerald-500', 'bg-emerald-50');
+            event.currentTarget.classList.remove('border-gray-200');
+            updateDesignPreview();
+        }
+
+        function setColor(color) {
+            qrColor = color;
+            document.querySelectorAll('.color-option').forEach(c => {
+                c.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            updateDesignPreview();
+        }
+
+        function handleDesignLogo(event) {
             const file = event.target.files[0];
             if (!file) return;
             
             const reader = new FileReader();
             reader.onload = (e) => {
-                cardPhoto = e.target.result;
-                document.getElementById('photo-preview').innerHTML = `<img src="${cardPhoto}" class="w-full h-full object-cover">`;
-                updateCardPreview();
+                qrLogo = e.target.result;
+                document.getElementById('design-logo-preview').classList.remove('hidden');
+                document.getElementById('design-logo-img').src = qrLogo;
+                updateDesignPreview();
             };
             reader.readAsDataURL(file);
         }
 
-        // Update Card Preview
-        function updateCardPreview() {
-            const name = document.getElementById('card-name').value || 'Votre Nom';
-            const title = document.getElementById('card-title').value || 'Titre / Fonction';
-            const company = document.getElementById('card-company').value || 'Entreprise';
-            const phone = document.getElementById('card-phone').value;
-            const email = document.getElementById('card-email').value;
-            const address = document.getElementById('card-address').value;
-            const website = document.getElementById('card-website').value;
+        function updateDesignPreview() {
+            const size = document.getElementById('qr-size').value;
+            document.getElementById('size-display').textContent = size + 'px';
+            qrSize = parseInt(size);
             
-            document.getElementById('preview-name').textContent = name;
-            document.getElementById('preview-title').textContent = title;
-            document.getElementById('preview-company').textContent = company;
+            // Generate preview QR
+            const container = document.getElementById('phone-qr-container');
+            container.innerHTML = '';
             
-            // Update contact info based on type
-            let contactHTML = '';
-            if (currentCardType === 'full' || currentCardType === 'phone') {
-                if (phone) contactHTML += `<i class="fas fa-phone mr-2"></i>${phone}<br>`;
-            }
-            if (currentCardType === 'full' || currentCardType === 'email') {
-                if (email) contactHTML += `<i class="fas fa-envelope mr-2"></i>${email}<br>`;
-            }
-            if (currentCardType === 'full' || currentCardType === 'website') {
-                if (website) contactHTML += `<i class="fas fa-globe mr-2"></i>${website}<br>`;
-            }
-            if (currentCardType === 'sms') {
-                contactHTML = '<i class="fas fa-sms mr-2"></i>Envoyer un SMS';
-            }
-            if (currentCardType === 'whatsapp') {
-                contactHTML = '<i class="fab fa-whatsapp mr-2"></i>WhatsApp';
-            }
+            const div = document.createElement('div');
+            div.className = 'w-48 h-48 bg-white rounded-2xl shadow-xl flex items-center justify-center p-4';
             
-            document.getElementById('preview-contact').innerHTML = contactHTML || '<i class="fas fa-info-circle mr-2"></i>Remplissez vos coordonnées';
-            document.getElementById('preview-address').textContent = address || 'Adresse';
-            
-            // Photo
-            if (cardPhoto) {
-                document.getElementById('preview-photo').innerHTML = `<img src="${cardPhoto}" class="w-full h-full object-cover">`;
-            }
-            
-            // Generate QR for preview
-            generateCardQR();
-        }
-
-        // Generate Card QR
-        function generateCardQR() {
-            const name = document.getElementById('card-name').value;
-            const phone = document.getElementById('card-phone').value;
-            const email = document.getElementById('card-email').value;
-            const website = document.getElementById('card-website').value;
-            const address = document.getElementById('card-address').value;
-            
-            let qrData = '';
-            
-            switch(currentCardType) {
-                case 'full':
-                case 'vcard':
-                    qrData = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\n`;
-                    if (phone) qrData += `TEL:${phone}\n`;
-                    if (email) qrData += `EMAIL:${email}\n`;
-                    if (website) qrData += `URL:${website}\n`;
-                    if (address) qrData += `ADR:;;${address};;;;\n`;
-                    qrData += 'END:VCARD';
-                    break;
-                case 'phone':
-                    qrData = `tel:${phone}`;
-                    break;
-                case 'email':
-                    qrData = `mailto:${email}`;
-                    break;
-                case 'sms':
-                    qrData = `sms:${phone}`;
-                    break;
-                case 'whatsapp':
-                    qrData = `https://wa.me/${phone?.replace(/[^0-9]/g, '')}`;
-                    break;
-                case 'website':
-                    qrData = website;
-                    break;
-                case 'location':
-                    qrData = `geo:0,0?q=${encodeURIComponent(address)}`;
-                    break;
-                case 'event':
-                    qrData = website || address;
-                    break;
-                case 'social':
-                    const linkedin = document.getElementById('card-linkedin').value;
-                    qrData = linkedin ? `https://linkedin.com/in/${linkedin}` : website;
-                    break;
-            }
-            
-            if (!qrData) return;
-            
-            // Generate mini QR for card preview
-            const qrDiv = document.getElementById('preview-qr');
-            qrDiv.innerHTML = '';
-            new QRCode(qrDiv, {
-                text: qrData,
-                width: 80,
-                height: 80,
-                colorDark: currentCardTemplate === 7 ? '#000000' : '#000000',
+            new QRCode(div, {
+                text: qrData || 'https://example.com',
+                width: 160,
+                height: 160,
+                colorDark: qrColor,
                 colorLight: '#ffffff',
                 correctLevel: QRCode.CorrectLevel.H
             });
             
-            return qrData;
+            container.appendChild(div);
         }
 
-        // Generate Full Card
-        function generateCard() {
-            const qrData = generateCardQR();
-            if (!qrData) {
-                showToast('Veuillez remplir au moins un champ', 'error');
-                return;
-            }
-            
-            // Show full QR
-            const detailDiv = document.getElementById('card-qr-detail');
-            detailDiv.classList.remove('hidden');
-            
-            const qrContainer = document.getElementById('card-qr-code');
-            qrContainer.innerHTML = '';
-            new QRCode(qrContainer, {
-                text: qrData,
-                width: 200,
-                height: 200,
-                correctLevel: QRCode.CorrectLevel.H
-            });
-            
-            // Save to my cards
-            const card = {
-                id: Date.now(),
-                name: document.getElementById('card-name').value || 'Sans nom',
-                template: currentCardTemplate,
-                data: qrData,
-                timestamp: new Date().toISOString()
-            };
-            
-            myCards.unshift(card);
-            if (myCards.length > 20) myCards.pop();
-            localStorage.setItem('myCards', JSON.stringify(myCards));
-            
-            renderMyCards();
-            updateStats();
-            showToast('Carte créée avec succès !');
-            createConfetti();
-        }
-
-        // Download Card
-        async function downloadCard() {
-            const cardElement = document.getElementById('card-preview');
-            
-            try {
-                const canvas = await html2canvas(cardElement, {
-                    scale: 2,
-                    backgroundColor: null
-                });
-                
-                const link = document.createElement('a');
-                link.download = `carte-${Date.now()}.png`;
-                link.href = canvas.toDataURL();
-                link.click();
-                
-                showToast('Carte téléchargée !');
-            } catch (err) {
-                showToast('Erreur de génération', 'error');
-            }
-        }
-
-        // Render My Cards
-        function renderMyCards() {
-            const container = document.getElementById('my-cards-gallery');
-            
-            if (myCards.length === 0) {
-                container.innerHTML = '<p class="text-gray-400 text-center py-8 col-span-2 italic">Aucune carte sauvegardée</p>';
-                return;
-            }
-            
-            container.innerHTML = myCards.map((card, index) => `
-                <div class="business-card rounded-xl p-3 card-template-${card.template} cursor-pointer hover:scale-105 transition-transform" onclick="loadCard(${index})">
-                    <div class="h-full flex flex-col justify-between text-xs">
-                        <p class="font-bold truncate">${card.name}</p>
-                        <div class="w-8 h-8 bg-white/20 rounded flex items-center justify-center self-end">
-                            <i class="fas fa-qrcode"></i>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Load Card
-        function loadCard(index) {
-            const card = myCards[index];
-            showToast(`Carte "${card.name}" chargée`);
-        }
-
-        // Clear Cards
-        function clearAllCards() {
-            if (confirm('Effacer toutes les cartes ?')) {
-                myCards = [];
-                localStorage.removeItem('myCards');
-                renderMyCards();
-                updateStats();
-            }
-        }
-
-        // Wi-Fi QR Generation
-        function generateWiFiQR() {
-            const ssid = document.getElementById('wifi-ssid-simple').value;
-            const password = document.getElementById('wifi-password-simple').value;
-            const security = document.getElementById('wifi-security-simple').value;
-            
-            if (!ssid) return;
-            
-            const qrData = `WIFI:T:${security};S:${ssid};P:${password};;`;
-            
-            const container = document.getElementById('wifi-qr-preview');
+        // Final Generation
+        function generateFinalQR() {
+            const container = document.getElementById('final-qr');
             container.innerHTML = '';
+            
             new QRCode(container, {
                 text: qrData,
-                width: 256,
-                height: 256,
+                width: 250,
+                height: 250,
+                colorDark: qrColor,
+                colorLight: '#ffffff',
                 correctLevel: QRCode.CorrectLevel.H
             });
             
-            document.getElementById('wifi-actions').classList.remove('hidden');
+            // Save to history
+            const item = {
+                id: Date.now(),
+                type: selectedType,
+                data: qrData,
+                color: qrColor,
+                timestamp: new Date().toISOString()
+            };
+            history.unshift(item);
+            if (history.length > 50) history.pop();
+            localStorage.setItem('qrHistory', JSON.stringify(history));
         }
 
-        // Scanner Functions
-        async function startScan() {
+        // Downloads
+        function downloadFinal(format) {
+            const canvas = document.querySelector('#final-qr canvas');
+            if (!canvas) return;
+            
+            if (format === 'png') {
+                const link = document.createElement('a');
+                link.download = `qrcode-${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } else if (format === 'svg') {
+                const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="250" height="250">
+                    <image href="${canvas.toDataURL()}" width="250" height="250"/>
+                </svg>`;
+                const blob = new Blob([svg], {type: 'image/svg+xml'});
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.download = `qrcode-${Date.now()}.svg`;
+                link.href = url;
+                link.click();
+            } else if (format === 'pdf') {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
+                const imgData = canvas.toDataURL('image/png');
+                pdf.addImage(imgData, 'PNG', 60, 60, 90, 90);
+                pdf.save(`qrcode-${Date.now()}.pdf`);
+            }
+            
+            showToast(`Downloaded as ${format.toUpperCase()}`);
+        }
+
+        function printFinal() {
+            const canvas = document.querySelector('#final-qr canvas');
+            if (!canvas) return;
+            
+            const win = window.open('', '_blank');
+            win.document.write(`
+                <html>
+                <head><title>Print QR Code</title></head>
+                <body style="display:flex;justify-content:center;align-items:center;height:100vh;margin:0;">
+                    <img src="${canvas.toDataURL()}" style="max-width:80%;">
+                    <script>window.onload = () => setTimeout(() => window.print(), 100);<\/script>
+                </body>
+                </html>
+            `);
+        }
+
+        function shareFinal() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My QR Code',
+                    text: 'Created with QR Code Generator',
+                    url: window.location.href
+                });
+            } else {
+                showToast('Sharing not supported on this device');
+            }
+        }
+
+        // Scanner Modal
+        function showScanner() {
+            document.getElementById('scanner-modal').classList.remove('hidden');
+        }
+
+        function closeScanner() {
+            stopCamera();
+            document.getElementById('scanner-modal').classList.add('hidden');
+        }
+
+        async function startCamera() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
                 const video = document.getElementById('scan-video');
                 video.srcObject = stream;
                 scanStream = stream;
-                
                 scanLoop();
             } catch (err) {
-                showToast('Caméra non accessible', 'error');
+                showToast('Camera access denied', 'error');
+            }
+        }
+
+        function stopCamera() {
+            if (scanStream) {
+                scanStream.getTracks().forEach(track => track.stop());
+                scanStream = null;
             }
         }
 
@@ -1084,22 +1349,17 @@
             const code = jsQR(imageData.data, imageData.width, imageData.height);
             
             if (code) {
-                showScanResult(code.data);
-                stopScan();
+                showToast('QR Code detected: ' + code.data.substring(0, 50) + '...');
+                // Handle scanned data
+                stopCamera();
+                closeScanner();
                 return;
             }
             
             requestAnimationFrame(scanLoop);
         }
 
-        function stopScan() {
-            if (scanStream) {
-                scanStream.getTracks().forEach(track => track.stop());
-                scanStream = null;
-            }
-        }
-
-        function scanFromImage(event) {
+        function scanFromFile(event) {
             const file = event.target.files[0];
             if (!file) return;
             
@@ -1115,83 +1375,62 @@
                 const code = jsQR(imageData.data, imageData.width, imageData.height);
                 
                 if (code) {
-                    showScanResult(code.data);
+                    showToast('QR Code detected!');
                 } else {
-                    showToast('Aucun QR trouvé', 'error');
+                    showToast('No QR code found', 'error');
                 }
             };
             img.src = URL.createObjectURL(file);
         }
 
-        function showScanResult(data) {
-            document.getElementById('scan-result').classList.remove('hidden');
-            document.getElementById('scan-content').textContent = data;
+        // History
+        function showHistory() {
+            const modal = document.getElementById('history-modal');
+            const list = document.getElementById('history-list');
             
-            const linkBtn = document.getElementById('scan-link');
-            if (data.startsWith('http')) {
-                linkBtn.href = data;
-                linkBtn.classList.remove('hidden');
+            if (history.length === 0) {
+                list.innerHTML = '<p class="text-center text-gray-500 py-8">No history yet</p>';
             } else {
-                linkBtn.classList.add('hidden');
+                list.innerHTML = history.map(item => `
+                    <div class="history-item flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-qrcode text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium capitalize">${item.type}</p>
+                                <p class="text-xs text-gray-500">${new Date(item.timestamp).toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                        <button onclick="restoreHistoryItem(${item.id})" class="px-4 py-2 bg-emerald-500 text-white rounded-lg text-sm hover:bg-emerald-600">
+                            Restore
+                        </button>
+                    </div>
+                `).join('');
+            }
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeHistory() {
+            document.getElementById('history-modal').classList.add('hidden');
+        }
+
+        function restoreHistoryItem(id) {
+            const item = history.find(h => h.id === id);
+            if (item) {
+                qrData = item.data;
+                selectedType = item.type;
+                qrColor = item.color;
+                goToStep(4);
+                closeHistory();
             }
         }
 
-        // Batch Generation
-        function generateBatch() {
-            const input = document.getElementById('batch-input').value.trim();
-            if (!input) return;
-            
-            const lines = input.split('\n').filter(l => l.trim());
-            const container = document.getElementById('batch-results');
-            container.innerHTML = '';
-            
-            lines.forEach((line, index) => {
-                const div = document.createElement('div');
-                div.className = 'bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md';
-                
-                const qrDiv = document.createElement('div');
-                new QRCode(qrDiv, {
-                    text: line,
-                    width: 120,
-                    height: 120
-                });
-                
-                div.innerHTML = `
-                    <div class="flex justify-center mb-2" id="batch-qr-${index}"></div>
-                    <p class="text-xs text-gray-500 truncate text-center">${line}</p>
-                    <button onclick="downloadBatchItem(${index})" class="w-full mt-2 py-2 bg-gray-800 text-white rounded-lg text-sm">
-                        <i class="fas fa-download"></i>
-                    </button>
-                `;
-                
-                container.appendChild(div);
-                div.querySelector(`#batch-qr-${index}`).appendChild(qrDiv);
-            });
-            
-            document.getElementById('batch-zip-btn').disabled = false;
-            document.getElementById('batch-zip-btn').classList.remove('opacity-50', 'cursor-not-allowed');
-            
-            showToast(`${lines.length} QR générés`);
-        }
-
-        // Utilities
-        function togglePassword(id) {
-            const input = document.getElementById(id);
-            const icon = input.nextElementSibling.querySelector('i');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        }
-
+        // Theme
         function toggleTheme() {
             document.body.classList.toggle('dark');
-            const icon = document.getElementById('theme-icon');
+            const icon = document.querySelector('header .fa-moon');
             if (document.body.classList.contains('dark')) {
                 icon.classList.remove('fa-moon');
                 icon.classList.add('fa-sun');
@@ -1201,35 +1440,22 @@
             }
         }
 
+        // Toast
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             const msg = document.getElementById('toast-message');
+            const icon = toast.querySelector('i');
+            
             msg.textContent = message;
+            icon.className = type === 'error' ? 'fas fa-exclamation-circle text-red-400 text-xl' : 'fas fa-check-circle text-emerald-400 text-xl';
             
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        function createConfetti() {
-            for (let i = 0; i < 30; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.backgroundColor = ['#667eea', '#764ba2', '#f093fb', '#f5576c'][Math.floor(Math.random() * 4)];
-                confetti.style.animation = `confetti-fall ${Math.random() * 2 + 2}s linear forwards`;
-                document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 4000);
-            }
-        }
-
-        function updateStats() {
-            document.getElementById('stat-total').textContent = qrHistory.length;
-            document.getElementById('stat-cards').textContent = myCards.length;
-            document.getElementById('stat-favs').textContent = favorites.length;
-        }
-
-        function renderHistory() {
-            // Implementation for full history
+        // Handle PDF (placeholder)
+        function handlePDFUpload(event) {
+            showToast('PDF uploaded successfully');
         }
     </script>
 </body>
